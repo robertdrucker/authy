@@ -1,24 +1,21 @@
 "use client";
-import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
-
   const credentialsAction = async (formData: FormData) => {
     const result = await signIn("credentials", {
       username: formData.get("username"),
       password: formData.get("password"),
-      redirect: false,
+      redirect: true,
       callbackUrl: "/",
     });
 
     if (result?.error) {
-      setError(result.error);
-    } else {
-      setError(null);
+      setError("Invalid credentials");
     }
   };
 
@@ -55,7 +52,7 @@ export function LoginForm() {
       {error && <p>{error}</p>}
       <Button
         type="submit"
-        className="w-full bg-brand-primary text-gray-900 hover:bg-brand-primary/90 mt-4"
+        className="w-full bg-brand-primary text-gray-900 hover:bg-brand-primary/90"
       >
         Sign In
       </Button>
