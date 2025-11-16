@@ -1,22 +1,37 @@
-import { signIn } from "@/auth";
+"use client";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export function LoginForm() {
+  const [error, setError] = useState<string | null>(null);
+
+  const credentialsAction = async (formData: FormData) => {
+    const result = await signIn("credentials", {
+      username: formData.get("username"),
+      password: formData.get("password"),
+      redirect: false,
+      callbackUrl: "/",
+    });
+
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      setError(null);
+    }
+  };
+
   return (
-    <form
-      action={async (formData) => {
-        "use server";
-        await signIn("credentials", formData);
-      }}
-    >
-      <label>
+    <form action={credentialsAction}>
+      <label htmlFor="username">
         Username
-        <input name="username" type="text" />
+        <input type="text" id="username" name="username" />
       </label>
-      <label>
+      <label htmlFor="password">
         Password
-        <input name="password" type="password" />
+        <input type="password" id="password" name="password" />
       </label>
-      <button>Sign In</button>
+      <input type="submit" value="Sign In" />
+      {error && <p>{error}</p>}
     </form>
   );
 }
