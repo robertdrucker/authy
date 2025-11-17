@@ -32,7 +32,7 @@ export function LoginForm() {
           required
           className="w-full p-2 rounded-md border border-gray-200 
         focus:border-brand-secondary focus:ring-2 focus:ring-brand-secondary/20 
-        outline-none transition-all bg-gray-50"
+        outline-hidden transition-all bg-gray-50"
           placeholder="Username"
         />
         <label htmlFor="password" className="sr-only">
@@ -45,17 +45,18 @@ export function LoginForm() {
           required
           className="w-full p-2 rounded-md border border-gray-200 
                      focus:border-brand-secondary focus:ring-2 focus:ring-brand-secondary/20 
-                     outline-none transition-all bg-gray-50"
+                     outline-hidden transition-all bg-gray-50"
           placeholder="Password"
         />
+
+        {error && <p>{error}</p>}
+        <Button
+          type="submit"
+          className="w-full bg-brand-primary text-gray-900 hover:bg-brand-primary/90"
+        >
+          Sign In
+        </Button>
       </div>
-      {error && <p>{error}</p>}
-      <Button
-        type="submit"
-        className="w-full bg-brand-primary text-gray-900 hover:bg-brand-primary/90"
-      >
-        Sign In
-      </Button>
     </form>
   );
 }
