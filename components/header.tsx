@@ -21,7 +21,11 @@ export default async function Header() {
               <form
                 action={async () => {
                   "use server";
-                  await signOut({ redirectTo: "/login" });
+                  await signOut();
+
+                  // Does not protect against entering a subsequent url like /dashboard
+                  // middleware implmented instead
+                  // await signOut({ redirectTo: "/login" });
                 }}
               >
                 <Button
